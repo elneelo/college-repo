@@ -102,7 +102,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 			if ((int) lexeme[i] - ASCII_INT_OFFSET >= 0 &&
 					(int) lexeme[i] - ASCII_INT_OFFSET <= 9) {		//integer check [0 -> 9]
 
-				temp = getCurrentExponent(HEX_BASE_EXP, lexLength);
+				temp = getCurrentExponent(HEX_BASE_EXP, lexLength);			//same calculations, with the appropraite parameters
 
 				if (lexLength > 0) {
 					if (temp != 0) {
@@ -177,6 +177,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 			}
 		}
 
+		//from here, exact same layout as used for octal -> decimal calculations, but with variable "hexToInteger" used
 		printf("\nLexeme: %s", lexeme);
 		printf("\nLexical token (Constant, %d", hexToInteger);
 		printf(")");
@@ -185,7 +186,8 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 		if (hexToInteger > MAX_DECIMAL_LIMIT) {
 			return false;
 		} else {
-			return true;
+			return true;						//return the final converted decimal constant here, provided that all error checks have
+															//been completed successfully
 		}
 	}
 	return false;
