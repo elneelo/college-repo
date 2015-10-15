@@ -194,6 +194,31 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 }
 
 
+//function used to confirm a valid 32-bit decimal value witin the specified guards
+bool checkDecimalConstantValidity (char lexeme[]) {
+	int lexLength = strlen(lexeme);
+	int i;
+	int stringToDecimal = 0;
+
+	for (i=0; i<lexLength; i++) {
+		stringToDecimal += ((int) lexeme[i] - ASCII_INT_OFFSET);
+		if (i != lexLength-1) {
+			stringToDecimal *= 10;
+		}
+	}
+
+	if (stringToDecimal > MAX_DECIMAL_LIMIT) {
+		return false;
+	} else {
+		printf("\nLexeme: %s", lexeme);
+		printf("\nLexical token (Constant, %d", stringToDecimal);
+		printf(")");
+		printf("\n");
+		return true;
+	}
+}
+
+
 //user input supported, as well as manual tests to check all possible combinations
 int main() {
 
@@ -236,8 +261,10 @@ int main() {
 
 	if (checkHexadecimalConstantValidity(userInput)) {
 		printf("\n");
+	} else if (checkOctalConstantValidity(userInput)) {
+		printf("\n");
 	} else {
-		checkOctalConstantValidity(userInput);
+		checkDecimalConstantValidity(userInput);
 		printf("\n");
 	}
 
