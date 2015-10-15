@@ -74,7 +74,7 @@ bool checkOctalConstantValidity (char lexeme[]) {
 		//printf("\n");
 		printf("\n");
 
-		if (octalToInteger >= MAX_INT_LIMIT) {
+		if (octalToInteger > MAX_INT_LIMIT) {
 			return false;
 		} else {
 			return true;
@@ -198,7 +198,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 		//printf("\n");
 		printf("\n");
 
-		if (hexToInteger >= MAX_INT_LIMIT) {
+		if (hexToInteger > MAX_INT_LIMIT) {
 			printf("\n### Me (1) ###");
 			printf("\n");
 			return false;
@@ -258,10 +258,17 @@ int main() {
 	// printf("\n");
 	// printf("\n");
 
-	bool testUserInput = checkHexadecimalConstantValidity(userInput);
-	printf("%s", testUserInput ? "true" : "false");
-	printf("\n");
-	printf("\n");
+	if (checkHexadecimalConstantValidity(userInput) == true) {
+		bool testUserInput = checkHexadecimalConstantValidity(userInput);
+		printf("%s", testUserInput ? "true" : "false");
+		printf("\n");
+		printf("\n");
+	} else {
+		bool testUserInput = checkOctalConstantValidity(userInput);
+		printf("%s", testUserInput ? "true" : "false");
+		printf("\n");
+		printf("\n");
+	}
 
 
 	return 0;
