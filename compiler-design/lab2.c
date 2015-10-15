@@ -4,9 +4,12 @@
 #include <string.h>
 
 int MAX_INT_LIMIT = 2147483647;
-int ASCII_OFFSET = 48;
+int ASCII_INT_OFFSET = 48;
+int ASCII_CHAR_LOWER_OFFSET = 87;
+int ASCII_CHAR_UPPER_OFFSET = 65;
 
 
+// 
 int getCurrentExponent (int n, int exponent) {
 	int originalNumber = n;
 	while (exponent > 1) {
@@ -17,6 +20,7 @@ int getCurrentExponent (int n, int exponent) {
 }
 
 
+// 
 bool checkOctalConstantValidity (char lexeme[]) {
 	int lexLength = strlen(lexeme);
 	int origLength = lexLength;
@@ -31,19 +35,19 @@ bool checkOctalConstantValidity (char lexeme[]) {
 		int octalToInteger = 0;
 
 		while (i < origLength-1) {
-			if (((int) lexeme[i] - ASCII_OFFSET) <= 7) {
-				// printf("\n***(int) lexeme[i] - ASCII_OFFSET: %d", (int) lexeme[i] - ASCII_OFFSET);
+			if (((int) lexeme[i] - ASCII_INT_OFFSET) <= 7) {
+				// printf("\n***(int) lexeme[i] - ASCII_INT_OFFSET: %d", (int) lexeme[i] - ASCII_INT_OFFSET);
 				// printf("\n");
 				// printf("\n***lexLength: %d", lexLength);
 				// printf("\n");
 				temp = getCurrentExponent(8, lexLength);
 
 				if (lexLength > 0) {
-					temp *= (((int) lexeme[i]) - ASCII_OFFSET);
+					temp *= (((int) lexeme[i]) - ASCII_INT_OFFSET);
 					// printf("\n***IMPORTANT TEMP: %d", temp);
 					// printf("\n");
 				} else {
-					temp = (((int) lexeme[i]) - ASCII_OFFSET);
+					temp = (((int) lexeme[i]) - ASCII_INT_OFFSET);
 				}
 
 				// printf("\n***TEMP: %d", temp);
@@ -53,7 +57,7 @@ bool checkOctalConstantValidity (char lexeme[]) {
 				lexLength--;
 				i++;
 			} else {
-				printf("\nSKIPPED");
+				printf("\n***** INVALID *****");
 				printf("\n");
 				return false;
 			}
@@ -73,37 +77,86 @@ bool checkOctalConstantValidity (char lexeme[]) {
 }
 
 
-// bool checkForOct (char lexeme[]) {
-// 	int lexLength = strlen(lexeme);
-// 	if (lexeme[lexLength-1] == ('b' | 'B')) {
-// 		return true;
-// 	}
-// 	return false;
-// }
 
 
-// bool checkLexCharLength (char lexeme[]) {
-// 	int lexLength = strlen(lexeme);
-// 	if (lexLength <= 8) {
-// 		return true;
-// 	} else if (lexLength == 9 && ((checkForHex(lexeme) == true) ||
-// 		 		(checkForOct(lexeme) == true))) {
-// 			return true;
-// 	}
-// 	return false;
-// }
 
-
-int convertOctToInt (char lexeme[]) {
+// 
+bool checkHexadecimalConstantValidity (char lexeme[]) {
 	int lexLength = strlen(lexeme);
-	return 0;
-}
+	int origLength = lexLength;
+	lexLength -= 2;
 
+	if (lexeme[origLength-1] == ('h' | 'H')) {
 
-bool maxOctalConstant (char lexeme[]) {
-	//int maxOct = 17777777777;
+		int i = 0;
+		int temp = 0;
+		int hexToInteger = 0;
+
+		while (i < origLength-1) {
+			if ((int) lexeme[i] - ASCII_INT_OFFSET >= 0 &&
+					(int) lexeme[i] - ASCII_INT_OFFSET <= 9) {
+
+				temp = getCurrentExponent(16, lexLength);
+
+				if (lexLength > 0) {
+					temp *= (((int) lexeme[i]) - ASCII_INT_OFFSET);
+					// printf("\n***IMPORTANT TEMP: %d", temp);
+					// printf("\n");
+				} else {
+					temp = (((int) lexeme[i]) - ASCII_INT_OFFSET);
+				}
+
+				// printf("\n***TEMP: %d", temp);
+				// printf("\n");
+				hexToInteger += temp;
+				temp = 0;
+				lexLength--;
+				i++;
+
+			}
+			else if ((int) lexeme[i] - ASCII_CHAR_LOWER_OFFSET >= 10 &&
+					(int) lexeme[i] - ASCII_CHAR_LOWER_OFFSET <= 15) {
+					// (((int) lexeme[i] - ASCII_CHAR_UPPER_OFFSET >= 10 &&
+					// (int) lexeme[i] - ASCII_CHAR_UPPER_OFFSET <= 15)) {
+
+				temp = getCurrentExponent(16, lexLength);
+
+				if (lexLength > 0) {
+					temp *= (((int) lexeme[i]) - ASCII_CHAR_LOWER_OFFSET);
+					// printf("\n***IMPORTANT TEMP: %d", temp);
+					// printf("\n");
+				} else {
+					temp = (((int) lexeme[i]) - ASCII_CHAR_LOWER_OFFSET);
+				}
+
+				// printf("\n***TEMP: %d", temp);
+				// printf("\n");
+				hexToInteger += temp;
+				temp = 0;
+				lexLength--;
+				i++;
+
+			} else {
+				printf("\n***** INVALID *****");
+				printf("\n");
+				return false;
+			}
+		}
+
+		printf("\n**********Converted Integer: %d", hexToInteger);
+		printf("\n");
+		printf("\n");
+
+		if (hexToInteger >= MAX_INT_LIMIT) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	return false;
 }
+
+
 
 
 int main() {
@@ -120,6 +173,11 @@ int main() {
 
 	bool test2 = checkOctalConstantValidity(lex5);
 	printf("%s", test2 ? "true" : "false");
+	printf("\n");
+	printf("\n");
+
+	bool test3 = checkHexadecimalConstantValidity(lex3);
+	printf("%s", test3 ? "true" : "false");
 	printf("\n");
 	printf("\n");
 
