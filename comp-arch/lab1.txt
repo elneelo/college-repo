@@ -1,0 +1,66 @@
+QUESTION 1
+
+ing g = 256;
+
+-------------------------------------
+
+public g
+
+g DWORD 256
+
+.code
+
+;int p(int i, int j)
+
+public p 															;ensure that function name is exported
+p:							push	ebp							;push frame pointer
+								mov 	ebp,esp					;update ebp
+								sub 	esp, 4					;allocate space for k
+								mov		eax, [ebp+8]		;eax=i
+								add 	eax, [ebp+12]		;eax=i+j
+								mov 	[ebp-4], eav		;move eax into  [ebp-4]. k=i+j
+								shl		eax, 2 					;k<<2
+								dec		eax							;eax=(k<<2) - 1
+								mov 	esp, ebp 				;restore esp
+								pop 	ebp 						;restore ebp
+								ret
+
+-------------------------------------
+
+public q 															;ensure that fuction name is exported
+q:							push 	ebp 						;push frame pointer
+								mov 	ebp, esp				;update ebp
+								push 	[ebp+8]					;push i
+								neg 	DWORD PTR[esp]	;negate top of stack (-i)
+								push 	g								;push g
+								call 	p 							;p(g,-i). Push return address onto stack.
+								add 	esp, 8					;pop params
+								mov 	esp, ebp 				;restore esp
+								pop 	ebp 						;restore ebp
+								ret 									;return
+
+-------------------------------------
+
+public f 															;ensure that function name is exported
+f:							push 	ebp 						;push frame pointer
+								mov 	ebp, esp				;update ebp
+								mov 	eax, [ebp+8]		;eax = n
+								test	eax, eax				;compare n with 0
+								je 		else						;branch to else if n=0
+								push 	eax							;push n
+								sub		eax, 1 					;n = n-1
+								mul		esp, eax				;n * f(n-1)
+								call 	f 							;call f
+								add 	esp, 4					;pop parameter (n)
+								mov 	esp, ebp 				;restore esp
+								pop 	ebp 						;restore ebp
+								ret 									;return
+
+else:						sub 	esp, 4					;allocate space for k (where k=1)
+								mov 	[ebp-4], eax		;move eax into [ebp-4]
+								mov 	eax, 1 					;eax=1
+								mov 	esp, ebp 				;retore esp
+								pop 	ebp 						;restore ebp
+								ret 									;return
+
+-------------------------------------
