@@ -203,9 +203,13 @@ bool checkDecimalConstantValidity (char lexeme[]) {
 	int stringToDecimal = 0;
 
 	for (i=0; i<lexLength; i++) {
-		stringToDecimal += ((int) lexeme[i] - ASCII_INT_OFFSET);
-		if (i != lexLength-1) {
-			stringToDecimal *= 10;
+		if (((int) lexeme[i] - ASCII_INT_OFFSET >= 0) && ((int) lexeme[i] - ASCII_INT_OFFSET <= 9)) {
+			stringToDecimal += ((int) lexeme[i] - ASCII_INT_OFFSET);
+			if (i != lexLength-1) {
+				stringToDecimal *= 10;
+			}
+		} else {
+			return false;
 		}
 	}
 	
@@ -266,10 +270,9 @@ int main() {
 
 	if (checkHexadecimalConstantValidity(userInput)) {
 		printf("\n");
-	} else if (!checkHexadecimalConstantValidity(userInput)) {
-		checkOctalConstantValidity(userInput);
+	} else if (checkOctalConstantValidity(userInput)) {
 		printf("\n");
-	} else if (!checkOctalConstantValidity(userInput)) {
+	} else {
 		checkDecimalConstantValidity(userInput);
 		printf("\n");
 	}
