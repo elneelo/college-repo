@@ -48,7 +48,7 @@ bool checkOctalConstantValidity (char lexeme[]) {
 																																			//calculate the final decimal value
 					} else {
 						printf("\nArithmetic operation has exceeded permissable parameters.");
-						printf("\nError, constant contains too many digits. (Overflow has occurred)");
+						printf("\nError, the converted decimal constant contains too many digits. (Overflow has occurred)");
 						printf("\n");
 						return false;									//guard actiavted as temp = 0
 					}
@@ -62,22 +62,23 @@ bool checkOctalConstantValidity (char lexeme[]) {
 				lexLength--;											//decrement the length of the array to be traversed
 				i++;															//increment i to esure that the while loop can be escaped
 			} else {
-				printf("\nError, this lexeme is not a valid octal constant");
+				printf("\nERROR. This lexeme is not a valid octal constant");
 				printf("\n");
 				return false;				//if this loop is entered, it means that the initial requirements for the constant to
 														//exist as an octal number have been violated
 			}
 		}
 
-		printf("\nLexeme: %s", lexeme);
-		printf("\nLexical token (Constant, %d", octalToInteger);
-		printf(")");
-		printf("\n");						//if all above checks and calculations are complete, print the decimal representation
-														//of the octal constant, and by doing so, ALMOST confirm its validity
-
-		if (octalToInteger > MAX_DECIMAL_LIMIT) {
+		if (octalToInteger > MAX_DECIMAL_LIMIT || octalToInteger < 0) {
+			printf("\nValue processed is outside the permissable range of 2^31 - 1. (Overflow)");
+			printf("\n");
 			return false;					//octal constant exceeds the maximum decimal limit
 		} else {
+			printf("\nLexeme: %s", lexeme);
+			printf("\nLexical token (Constant, %d", octalToInteger);
+			printf(")");
+			printf("\n");						//if all above checks and calculations are complete, print the decimal representation
+															//of the octal constant, and by doing so, ALMOST confirm its validity
 			return true;					//final confirmation of the octal constant's validity
 		}
 	}
@@ -109,7 +110,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 						temp *= (((int) lexeme[i]) - ASCII_INT_OFFSET);
 					} else {
 						printf("\nArithmetic operation has exceeded permissable parameters.");
-						printf("\nError, constant contains too many digits. (Overflow has occurred)");
+						printf("\nError, the converted decimal constant contains too many digits. (Overflow has occurred)");
 						printf("\n");
 						return false;
 					}
@@ -133,7 +134,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 						temp *= (((int) lexeme[i]) - ASCII_CHAR_LOWER_OFFSET);
 					} else {
 						printf("\nArithmetic operation has exceeded permissable parameters.");
-						printf("\nError, constant contains too many digits. (Overflow has occurred)");
+						printf("\nError, the converted decimal constant contains too many digits. (Overflow has occurred)");
 						printf("\n");
 						return false;
 					}
@@ -157,7 +158,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 						temp *= (((int) lexeme[i]) - ASCII_CHAR_UPPER_OFFSET);
 					} else {
 						printf("\nArithmetic operation has exceeded permissable parameters.");
-						printf("\nError, constant contains too many digits. (Overflow has occurred)");
+						printf("\nError, the converted decimal constant contains too many digits. (Overflow has occurred)");
 						printf("\n");
 						return false;
 					}
@@ -171,21 +172,22 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 				i++;
 
 			} else {
-				printf("\nError, this lexeme is not a valid hexadecimal constant");
+				printf("\nERROR. This lexeme is not a valid hexadecimal constant");
 				printf("\n");
 				return false;
 			}
 		}
 
-		//from here, exact same layout as used for octal -> decimal calculations, but with variable "hexToInteger" used
-		printf("\nLexeme: %s", lexeme);
-		printf("\nLexical token (Constant, %d", hexToInteger);
-		printf(")");
-		printf("\n");
-
-		if (hexToInteger > MAX_DECIMAL_LIMIT) {
+		if (hexToInteger > MAX_DECIMAL_LIMIT || hexToInteger < 0) {
+			printf("\nValue processed is outside the permissable range of 2^31 - 1. (Overflow)");
+			printf("\n");
 			return false;
 		} else {
+			//from here, exact same layout as used for octal -> decimal calculations, but with variable "hexToInteger" used
+			printf("\nLexeme: %s", lexeme);
+			printf("\nLexical token (Constant, %d", hexToInteger);
+			printf(")");
+			printf("\n");
 			return true;						//return the final converted decimal constant here, provided that all error checks have
 															//been completed successfully
 		}
@@ -206,16 +208,19 @@ bool checkDecimalConstantValidity (char lexeme[]) {
 			stringToDecimal *= 10;
 		}
 	}
-
-	if (stringToDecimal > MAX_DECIMAL_LIMIT) {
+	
+	if ((stringToDecimal > MAX_DECIMAL_LIMIT) || (i > 10) || (stringToDecimal < 0)) {
+		printf("\n!*!*Value processed is outside the permissable range of 2^31 - 1. (Overflow)\n");
+		printf("\n");
 		return false;
 	} else {
-		printf("\nLexeme: %s", lexeme);
+		printf("\n***Lexeme: %s", lexeme);
 		printf("\nLexical token (Constant, %d", stringToDecimal);
 		printf(")");
 		printf("\n");
 		return true;
 	}
+	return false;
 }
 
 
@@ -261,9 +266,10 @@ int main() {
 
 	if (checkHexadecimalConstantValidity(userInput)) {
 		printf("\n");
-	} else if (checkOctalConstantValidity(userInput)) {
+	} else if (!checkHexadecimalConstantValidity(userInput)) {
+		checkOctalConstantValidity(userInput);
 		printf("\n");
-	} else {
+	} else if (!checkOctalConstantValidity(userInput)) {
 		checkDecimalConstantValidity(userInput);
 		printf("\n");
 	}
