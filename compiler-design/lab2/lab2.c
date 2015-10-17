@@ -235,39 +235,6 @@ int main() {
 	printf("Type your lexeme: ");
 	scanf("%s", userInput);							//the user's input
 
-	//a few quick manual tests relevant to the commented sections of code below.
-	char lex1[] = "4096";								//is a lexeme
-	char lex2[] = "4321056b";						//is a lexeme
-	char lex3[] = "4321056h";						//is a lexeme
-	char lex4[] = "123456789h";					//is NOT a lexeme
-	char lex5[] = "4321086b";						//is NOT a lexeme
-	char lex6[] = "7ff329h";						//is a lexeme
-	char lex7[] = "324FA2Bh";						//is a lexeme
-
-	// bool test = checkOctalConstantValidity(lex2);
-	// printf("%s", test ? "true" : "false");
-	// printf("\n");
-
-	// bool test2 = checkOctalConstantValidity(lex5);
-	// printf("%s", test2 ? "true" : "false");
-	// printf("\n");
-
-	// bool test3 = checkHexadecimalConstantValidity(lex3);
-	// printf("%s", test3 ? "true" : "false");
-	// printf("\n");
-
-	// bool test4 = checkHexadecimalConstantValidity(lex4);
-	// printf("%s", test4 ? "true" : "false");
-	// printf("\n");
-
-	// bool test5 = checkHexadecimalConstantValidity(lex6);
-	// printf("%s", test5 ? "true" : "false");
-	// printf("\n");
-
-	// bool test6 = checkHexadecimalConstantValidity(lex7);
-	// printf("%s", test6 ? "true" : "false");
-	// printf("\n");
-
 	if (checkHexadecimalConstantValidity(userInput)) {
 		printf("\n");
 	} else if (checkOctalConstantValidity(userInput)) {
