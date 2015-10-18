@@ -67,17 +67,12 @@ bool checkOctalConstantValidity (char lexeme[]) {
 			}
 		}
 
-		if (octalToInteger > MAX_DECIMAL_LIMIT) {
-			printf("\nValue processed is outside the permissable range of 2^31 - 1. (Overflow)");
-			printf("\n");
-			return false;					//octal constant exceeds the maximum decimal limit
-		} else {
-			printf("\nLexeme: %s", lexeme);
-			printf("\nLexical token (Constant, %d)\n", octalToInteger);
-														//if all above checks and calculations are complete, print the decimal representation
-														//of the octal constant, and by doing so, ALMOST confirm its validity
-			return true;					//final confirmation of the octal constant's validity
-		}
+		printf("\nLexeme: %s", lexeme);
+		printf("\nLexical token (Constant, %d)\n", octalToInteger);
+													//if all above checks and calculations are complete, print the decimal representation
+													//of the octal constant, and by doing so, ALMOST confirm its validity
+		return true;					//final confirmation of the octal constant's validity
+
 	}
 	return false;							//the string is not an octal constant. Not appended with 'b' | 'B'
 }
@@ -171,16 +166,11 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 			}
 		}
 
-		if (hexToInteger > MAX_DECIMAL_LIMIT) {
-			printf("\nValue processed is outside the permissable range of 2^31 - 1. (Overflow)\n");
-			return false;
-		} else {
-			//from here, exact same layout as used for octal -> decimal calculations, but with variable "hexToInteger" used
-			printf("\nLexeme: %s", lexeme);
-			printf("\nLexical token (Constant, %d)\n", hexToInteger);
-			return true;						//return the final converted decimal constant here, provided that all error checks have
-															//been completed successfully
-		}
+		//from here, exact same layout as used for octal -> decimal calculations, but with variable "hexToInteger" used
+		printf("\nLexeme: %s", lexeme);
+		printf("\nLexical token (Constant, %d)\n", hexToInteger);
+		return true;						//return the final converted decimal constant here, provided that all error checks have
+														//been completed successfully
 	}
 	return false;
 }
