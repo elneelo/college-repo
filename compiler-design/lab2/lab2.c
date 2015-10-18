@@ -208,14 +208,12 @@ bool checkDecimalConstantValidity (char lexeme[]) {
 		}
 	}
 
-	// printf("\n(long) lexeme: %ld", (long) lexeme);
-
 	if (lexeme[0] == '-') {																				//if first element of lexeme[]] is '-' 
 		stringToDecimal *= -1;																			//multiply the decimal number by -1
 	}
 
 	if (lexeme[0] != '-') {
-		if (strcmp(lexeme, "2147483647") > 0) {
+		if (atoi(lexeme) < 0) {
 			printf("\nValue processed is outside the permissable 32-bit range of 2^31 - 1. (Overflow)\n");
 			return false;
 		} else {
@@ -229,7 +227,7 @@ bool checkDecimalConstantValidity (char lexeme[]) {
 			temp[j] = lexeme[j+1];
 		}
 
-		if (strcmp(temp, "2147483648") > 0) {
+		if (atoi(lexeme) > 0) {
 			printf("\nValue processed is outside the permissable 32-bit range of 2^31 - 1. (Overflow)\n");
 			return false;
 		} else {
