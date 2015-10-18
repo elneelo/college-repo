@@ -38,7 +38,7 @@ bool checkOctalConstantValidity (char lexeme[]) {
 		int octalToInteger = 0;								//the "" used to calculate the decimal representation of that octal constant
 
 		while (i < origLength-1) {						//loop until all elemens have been accessed and converted -> decimal
-			if (((int) lexeme[i] - ASCII_INT_OFFSET) <= 7) {
+			if ((((int) lexeme[i] - ASCII_INT_OFFSET) <= 7) && (((int) lexeme[i] - ASCII_INT_OFFSET) >= 0)) {
 
 				temp = getCurrentExponent(OCTAL_BASE_EXP, lexLength);					//calculate octal multiple, and store in temp
 
@@ -48,7 +48,7 @@ bool checkOctalConstantValidity (char lexeme[]) {
 																																			//calculate the final decimal value
 					} else {
 						printf("\nArithmetic operation has exceeded permissable parameters.");
-						printf("\nError, the converted decimal constant contains too many digits. (Overflow has occurred)");
+						printf("\nError, the converted decimal constant contains too many digits.");
 						printf("\n");
 						return false;									//guard actiavted as temp = 0
 					}
@@ -69,7 +69,7 @@ bool checkOctalConstantValidity (char lexeme[]) {
 			}
 		}
 
-		if (octalToInteger > MAX_DECIMAL_LIMIT || octalToInteger < 0) {
+		if (octalToInteger > MAX_DECIMAL_LIMIT) {
 			printf("\nValue processed is outside the permissable range of 2^31 - 1. (Overflow)");
 			printf("\n");
 			return false;					//octal constant exceeds the maximum decimal limit
@@ -110,7 +110,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 						temp *= (((int) lexeme[i]) - ASCII_INT_OFFSET);
 					} else {
 						printf("\nArithmetic operation has exceeded permissable parameters.");
-						printf("\nError, the converted decimal constant contains too many digits. (Overflow has occurred)");
+						printf("\nError, the converted decimal constant contains too many digits.");
 						printf("\n");
 						return false;
 					}
@@ -134,7 +134,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 						temp *= (((int) lexeme[i]) - ASCII_CHAR_LOWER_OFFSET);
 					} else {
 						printf("\nArithmetic operation has exceeded permissable parameters.");
-						printf("\nError, the converted decimal constant contains too many digits. (Overflow has occurred)");
+						printf("\nError, the converted decimal constant contains too many digits.");
 						printf("\n");
 						return false;
 					}
@@ -158,7 +158,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 						temp *= (((int) lexeme[i]) - ASCII_CHAR_UPPER_OFFSET);
 					} else {
 						printf("\nArithmetic operation has exceeded permissable parameters.");
-						printf("\nError, the converted decimal constant contains too many digits. (Overflow has occurred)");
+						printf("\nError, the converted decimal constant contains too many digits.");
 						printf("\n");
 						return false;
 					}
@@ -178,7 +178,7 @@ bool checkHexadecimalConstantValidity (char lexeme[]) {
 			}
 		}
 
-		if (hexToInteger > MAX_DECIMAL_LIMIT || hexToInteger < 0) {
+		if (hexToInteger > MAX_DECIMAL_LIMIT) {
 			printf("\nValue processed is outside the permissable range of 2^31 - 1. (Overflow)");
 			printf("\n");
 			return false;
@@ -213,12 +213,12 @@ bool checkDecimalConstantValidity (char lexeme[]) {
 		}
 	}
 	
-	if ((stringToDecimal > MAX_DECIMAL_LIMIT) || (i > 10) || (stringToDecimal < 0)) {
-		printf("\n!*!*Value processed is outside the permissable range of 2^31 - 1. (Overflow)\n");
+	if ((stringToDecimal > MAX_DECIMAL_LIMIT) || (i > 10)) {
+		printf("\nValue processed is outside the permissable range of 2^31 - 1. (Overflow)\n");
 		printf("\n");
 		return false;
 	} else {
-		printf("\n***Lexeme: %s", lexeme);
+		printf("\nLexeme: %s", lexeme);
 		printf("\nLexical token (Constant, %d", stringToDecimal);
 		printf(")");
 		printf("\n");
@@ -231,7 +231,7 @@ bool checkDecimalConstantValidity (char lexeme[]) {
 //user input supported, as well as manual tests to check all possible combinations
 int main() {
 
-	char userInput[20];									//define a char array (String) to be assigned as a user input variable	
+	char userInput[32];									//define a char array (String) to be assigned as a user input variable	
 	printf("Type your lexeme: ");
 	scanf("%s", userInput);							//the user's input
 
