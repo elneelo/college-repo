@@ -187,7 +187,7 @@ bool checkDecimalConstantValidity (char lexeme[]) {
 
 	for (i=0; i<lexLength; i++) {
 		if ((int) lexeme[i] != '-') {																//quick check for a negative ('-') at first element of lexeme[]
-			if (((int) lexeme[i] - ASCII_INT_OFFSET >= 0) && ((int) lexeme[i] - ASCII_INT_OFFSET <= 9)) {
+			if ((int) lexeme[i] - ASCII_INT_OFFSET > 0) {
 				stringToDecimal += ((int) lexeme[i] - ASCII_INT_OFFSET);
 				if (i != lexLength-1) {
 					stringToDecimal *= 10;
