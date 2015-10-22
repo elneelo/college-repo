@@ -233,12 +233,18 @@ bool checkDecimalConstantValidity (char lexeme[]) {
 //user input supported, as well as manual tests to check all possible combinations
 int main() {
 
-	char userInput[256];									//define a char array (String) to be assigned as a user input variable	
+	char userInput[256];											//define a char array (String) to be assigned as a user input variable	
 	printf("Type your lexeme: ");
 	fgets(userInput, 256, stdin);							//the user's input
 	char * input = strtok(userInput, " \n");
 
 	while (input != NULL) {
+
+		if (strcmp(input, "0") == 0) {
+			printf("\nLexeme: %s", input);
+			printf("\nLexical token (Constant, %d)\n", 0);
+		}
+
 		if (checkHexadecimalConstantValidity(input)) {
 			printf("\n");
 		} else if (checkOctalConstantValidity(input)) {
