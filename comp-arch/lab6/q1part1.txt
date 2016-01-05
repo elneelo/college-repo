@@ -1,0 +1,65 @@
+L = number of bytes per cache line (number of ways)
+K = number of ways per set
+N = number of sets
+
+Solve for N: L = 16, K= 1, N = N
+
+L*K*N = size of the cache
+16*1*N = 128
+N = 128/16
+N = 8
+
+8 sets: set0, set1, set2, set3,
+				set4, set5, set6 and set7
+
+set0: 0 8
+set1: 1 9
+set2: 2 a
+set3: 3 b
+set4: 4 c
+set5: 5 d
+set6: 6 e
+set7: 7 f
+
++---------+-----+----------+
+| address |	set |	hit/miss |
++---------+-----+----------+
+| 0000 		| 0		| m				 | (in cache set 0: "000")
+| 0004 		| 0 	| h				 | (in cache set 0: "000")
+| 000c 		| 0		| h				 | (in cache set 0: "000")
+| 2200 		| 0		| m				 | (in cache set 0: "220")
+| 00d0 		| 5 	| m				 | (in cache set 5: "00d")
+| 00e0 		| 6 	| m				 | (in cache set 6: "00e")
+| 1130 		| 3 	| m				 | (in cache set 3: "113")
+| 0028 		| 2 	| m				 | (in cache set 2: "002")
++---------+-----+----------+
+| 113c 		| 3 	| h				 | (in cache set 3: "113")
+| 2204 		| 0 	| h				 | (in cache set 0: "220")
+| 0010 		| 1 	| m				 | (in cache set 1: "001")
+| 0020 		| 2 	| h				 | (in cache set 2: "002")
+| 0004 		| 0 	| m				 | (in cache set 0: "000")
+| 0040 		| 4 	| m				 | (in cache set 4: "004")
+| 2208 		| 0 	| m				 | (in cache set 0: "220")
+| 0008 		| 0 	| m				 | (in cache set 0: "000")
++---------+-----+----------+
+| 00a0 		| 2 	| m				 | (in cache set 2: "00a")
+| 0004 		| 0 	| h				 | (in cache set 0: "000")
+| 1104 		| 0 	| m				 | (in cache set 0: "110")
+| 0028 		| 2 	| m				 | (in cache set 2: "002")
+| 000c 		| 0 	| m				 | (in cache set 0: "000")
+| 0084 		| 0 	| m				 | (in cache set 0: "008")
+| 000c 		| 0 	| m				 | (in cache set 0: "000")
+| 3390 		| 1 	| m				 | (in cache set 1: "339")
++---------+-----+----------+
+| 00b0 		| 3 	| m				 | (in cache set 3: "00b")
+| 1100 		| 0 	| m				 | (in cache set 0: "110")
+| 0028 		| 2 	| h				 | (in cache set 2: "002")
+| 0064 		| 6 	| m				 | (in cache set 6: "006")
+| 0070 		| 7 	| m				 | (in cache set 7: "007")
+| 00d0 		| 5 	| h				 | (in cache set 5: "00d")
+| 0008 		| 0 	| m				 | (in cache set 0: "000")
+| 3394 		| 1 	| h				 | (in cache set 1: "339")
++---------+-----+----------+
+
+9 hits
+23 misses
