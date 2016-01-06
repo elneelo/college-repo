@@ -1,0 +1,16 @@
+Taking answers from previous question:
+
+(i) 9 hits, 23 misses
+compulsory + capacity + conflict = 23
+
+compulsory = 8
+capacity = 15
+conflict = 0
+
+
+(iv) 16 hits, 16 misses
+compulsory + capacity + conflict = 16
+
+compulsory = 1
+capacity = 1
+conflict = 14

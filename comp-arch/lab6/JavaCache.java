@@ -8,11 +8,10 @@ public class JavaCache {
 
 	public static void main( String[] args ) {
 
-		System.out.print("\nPlease note that the default " +
-			"cache size for this program is 128 bytes.\n" + "\n");
-
 		Scanner scanner = new Scanner(System.in);
 
+		System.out.print("\nPlease specify the cache size: "); 
+		int cacheSize = scanner.nextInt();
 		System.out.print("Define L, (the number of bytes per cache line - way): ");
 		int intL = scanner.nextInt();
 		System.out.print("Define K, (the number of ways per set): ");
@@ -20,10 +19,9 @@ public class JavaCache {
 		System.out.print("Define N, (the number of sets): ");
 		int intN = scanner.nextInt();
 
-		int cacheSize = 128;
 		if ((intL*intK*intN) != cacheSize) {
 			System.out.print("\nWARNING! " +
-				"L * K * N does not equal the cache size of 128 bytes.\n" +"\n");
+				"L * K * N does not equal the cache size.\n" +"\n");
 			System.exit(0);
 		}
 
@@ -90,16 +88,21 @@ public class JavaCache {
 					tempCache = rearrangeCache(cache, element);
 					hit = true;
 					TOTAL_HITS += 1;
+					//System.out.println("\n" + "***CACHE HIT: " + tempCache + "\n");
 					break;
 				}
 			}
 		} else {
 			String temp = cacheBits(adr);
 			tempCache.add(temp);
+			//System.out.println("\n" + "***COLD CACHE WARMUP (COMPULSARY)" + "\n");
 			return tempCache;
 		}
 
-		if (!hit) { tempCache = manageCache(cache, adr, intK); }
+		if (!hit) {
+			tempCache = manageCache(cache, adr, intK);
+			//System.out.println("\n" + "***CACHE MISS: " + tempCache + "\n");
+		}
 
 		return tempCache;
 	}
@@ -123,7 +126,7 @@ public class JavaCache {
 			cache.remove(0);
 			cache.add(temp);
 		}
-
+		//System.out.println("\n" + "***CAPACITY" + "\n");
 		return cache;
 	}
 
