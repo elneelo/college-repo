@@ -1,0 +1,38 @@
+// This is a test program which can be compiled by the TastierCompiler.
+// It reads a sequence of numbers from the input file and computes, for each
+// number, the sum of all integers up to that number
+
+program Test {
+
+  void param(int e, int f, bool y){     
+    write e;
+    write f;
+    
+    if(y) {
+      write 4373;
+    }     
+  } 
+
+  void Main() {
+    int a;
+    int b;
+    bool c;
+    a := 2;
+    b := 3;
+    c := true;
+    
+    // int array[3];
+    // array[1] := 12021;
+    // write array;
+    
+    // int multipleArray[3][3];
+    // multipleArray[0][2] := 2112;
+    // write multipleArray[0][2];
+    
+    // int brokenArray[2];
+    // brokenArray[8] := 4224;
+    // write brokenArray[8];
+
+    param(a, b, c);
+  }  
+}
