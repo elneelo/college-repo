@@ -196,7 +196,7 @@ long long time_diff(struct timeval * start, struct timeval * end) {
 
 int main(int argc, char ** argv)
 {
-  struct complex ** A, ** B, ** C, ** D;
+  struct complex ** A, ** B, ** C;
   struct complex ** control_matrix;
   long long control_time, mul_time;
   double speedup;
@@ -225,7 +225,7 @@ int main(int argc, char ** argv)
   /* allocate the matrices */
   A = gen_random_matrix(a_dim1, a_dim2);
   B = gen_random_matrix(b_dim1, b_dim2);
-  C = new_empty_matrix(a_dim1, b_dim2); 
+  C = new_empty_matrix(a_dim1, b_dim2);
   control_matrix = new_empty_matrix(a_dim1, b_dim2);
 
   DEBUGGING( {
@@ -265,14 +265,6 @@ int main(int argc, char ** argv)
   /* now check that the team's matmul routine gives the same answer
      as the known working version */
   check_result(C, control_matrix, a_dim1, b_dim2);
-  
- /* printf("\n");
-  write_out(B, b_dim1, b_dim2);
-  printf("\n");
-  transpose(B, D, b_dim1, b_dim2);
-  printf("\n");
-  write_out(D, b_dim2, b_dim1);
-  printf("\n"); */
 
   /* free all matrices */
   free_matrix(A);
