@@ -7,7 +7,7 @@
 
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
-#define NTHREADS 64
+#define NTHREADS 8
 
 struct complex {
   float real;
